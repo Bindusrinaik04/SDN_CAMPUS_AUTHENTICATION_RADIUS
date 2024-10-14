@@ -54,3 +54,39 @@ The POX controller continuously monitors sessions, managing expired sessions by 
 
 ## Note
 This repository contains a modified version of l2_learning.py, which is part of the POX controller, and includes the logic for handling authentication. Additionally, it includes auth_db.py, which contains the logic for adding authenticated clients to the database. An important component of the system is the RADIUS server; its configuration involves only minor adjustments to add the client from which the RADIUS server will receive authentication requests. The repository also includes pcap files used during testing and a sample Mininet topology for network emulation and validation of the authentication system.
+
+## Basic Commands
+1. Running the POX Controller with l2_learning.py
+Make sure you are in the POX directory. Run the POX controller with the modified l2_learning.py script:
+
+cd /path/to/pox
+./pox.py forwarding.l2_learning
+
+2. Running auth_db.py
+In a separate terminal, navigate to the location where auth_db.py is stored and run it using Python:
+
+
+cd /path/to/auth_db
+python3 auth_db.py
+
+3. Running Mininet with a Custom Topology
+Make sure Mininet is installed, and then run it using a custom topology:
+
+
+sudo mn --custom /path/to/topology.py --topo mytopo --controller=remote,ip=127.0.0.1,port=6633 --mac --arp
+
+Replace /path/to/topology.py with the path to your topology file.
+Adjust mytopo to match the name of the topology defined in your script.
+Ensure the IP and port match those of the POX controller.
+
+4. Running Wireshark
+Start Wireshark with root privileges to capture traffic:
+
+sudo wireshark
+
+Once Wireshark opens, select the network interface connected to Mininet’s virtual network (e.g., lo, eth0).
+Apply filters like radius or openflow_v1 to focus on relevant traffic.
+
+### Additional Tips:
+Always run Mininet and Wireshark with sudo as they require elevated privileges to manage network interfaces and capture packets.
+Ensure your POX controller and other Python scripts are executable and have the necessary dependencies installed.
